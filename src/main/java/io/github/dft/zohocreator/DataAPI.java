@@ -1,10 +1,12 @@
 package io.github.dft.zohocreator;
 
+import io.github.dft.zohocreator.constantcode.ConstantCodes;
 import io.github.dft.zohocreator.model.authenticationapi.AccessCredential;
 import io.github.dft.zohocreator.model.dataapi.AddRecordRequest;
 import io.github.dft.zohocreator.model.dataapi.AddRecordResponse;
 import io.github.dft.zohocreator.model.dataapi.Records;
 import io.github.dft.zohocreator.model.dataapi.UpdateRecordRequest;
+import lombok.Builder;
 import lombok.SneakyThrows;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.utils.URIBuilder;
@@ -14,7 +16,10 @@ import java.util.HashMap;
 
 import static io.github.dft.zohocreator.constantcode.ConstantCodes.*;
 
+@Builder(toBuilder = true)
 public class DataAPI extends ZohoCreatorSdk {
+
+    protected AccessCredential accessCredential;
 
     public DataAPI(AccessCredential accessCredential) {
         super(accessCredential);
@@ -23,7 +28,7 @@ public class DataAPI extends ZohoCreatorSdk {
     @SneakyThrows
     public Records getRecords(HashMap<String, String> params, String reportLinkName) {
 
-        URIBuilder uriBuilder = new URIBuilder(API_BASE_END_POINT.concat(SLASH_CHARACTER)
+        URIBuilder uriBuilder = new URIBuilder(ConstantCodes.API_BASE_END_POINT.concat(SLASH_CHARACTER)
             .concat(accessCredential.getAccountOwnerName())
             .concat(SLASH_CHARACTER)
             .concat(accessCredential.getAppLinkName())
@@ -35,8 +40,8 @@ public class DataAPI extends ZohoCreatorSdk {
 
         HttpRequest request = HttpRequest.newBuilder(uriBuilder.build())
             .GET()
-            .header(HttpHeaders.CONTENT_TYPE, CONTENT_TYPE_VALUE)
-            .headers(AUTHORIZATION_HEADER, TOKEN_NAME.concat(accessCredential.getAccessToken()))
+            .header(HttpHeaders.CONTENT_TYPE, ConstantCodes.CONTENT_TYPE_VALUE)
+            .headers(ConstantCodes.AUTHORIZATION_HEADER, ConstantCodes.TOKEN_NAME.concat(accessCredential.getAccessToken()))
             .build();
 
         return getRequestWrapped(request, Records.class);
@@ -45,7 +50,7 @@ public class DataAPI extends ZohoCreatorSdk {
     @SneakyThrows
     public AddRecordResponse addRecord(AddRecordRequest addRecordRequest) {
 
-        URIBuilder uriBuilder = new URIBuilder(API_BASE_END_POINT.concat(SLASH_CHARACTER)
+        URIBuilder uriBuilder = new URIBuilder(ConstantCodes.API_BASE_END_POINT.concat(SLASH_CHARACTER)
             .concat(accessCredential.getAccountOwnerName())
             .concat(SLASH_CHARACTER)
             .concat(accessCredential.getAppLinkName())
@@ -55,8 +60,8 @@ public class DataAPI extends ZohoCreatorSdk {
 
         HttpRequest request = HttpRequest.newBuilder(uriBuilder.build())
             .POST(HttpRequest.BodyPublishers.ofString(getString(addRecordRequest.getData())))
-            .header(HttpHeaders.CONTENT_TYPE, CONTENT_TYPE_VALUE)
-            .headers(AUTHORIZATION_HEADER, TOKEN_NAME.concat(accessCredential.getAccessToken()))
+            .header(HttpHeaders.CONTENT_TYPE, ConstantCodes.CONTENT_TYPE_VALUE)
+            .headers(ConstantCodes.AUTHORIZATION_HEADER, ConstantCodes.TOKEN_NAME.concat(accessCredential.getAccessToken()))
             .build();
 
         return getRequestWrapped(request, AddRecordResponse.class);
@@ -66,7 +71,7 @@ public class DataAPI extends ZohoCreatorSdk {
     @SneakyThrows
     public AddRecordResponse updateRecord(UpdateRecordRequest updateRecordRequest) {
 
-        URIBuilder uriBuilder = new URIBuilder(API_BASE_END_POINT.concat(SLASH_CHARACTER)
+        URIBuilder uriBuilder = new URIBuilder(ConstantCodes.API_BASE_END_POINT.concat(SLASH_CHARACTER)
             .concat(accessCredential.getAccountOwnerName())
             .concat(SLASH_CHARACTER)
             .concat(accessCredential.getAppLinkName())
