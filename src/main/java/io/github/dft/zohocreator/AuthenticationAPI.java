@@ -1,13 +1,11 @@
 package io.github.dft.zohocreator;
 
-import io.github.dft.zohocreator.handler.JsonBodyHandler;
 import io.github.dft.zohocreator.model.authenticationapi.AccessCredential;
 import lombok.SneakyThrows;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.utils.URIBuilder;
 
 import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.HashMap;
 
 import static io.github.dft.zohocreator.constantcode.ConstantCodes.CONTENT_TYPE_VALUE;
