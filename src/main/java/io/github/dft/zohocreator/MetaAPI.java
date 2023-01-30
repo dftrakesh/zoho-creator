@@ -10,6 +10,9 @@ import org.apache.http.client.utils.URIBuilder;
 
 import java.net.http.HttpRequest;
 
+import static io.github.dft.zohocreator.constantcode.ConstantCodes.API_BASE_END_POINT;
+import static io.github.dft.zohocreator.constantcode.ConstantCodes.SLASH_CHARACTER;
+
 public class MetaAPI extends ZohoCreatorSdk {
 
     public MetaAPI(AccessCredential accessCredential) {
@@ -19,9 +22,9 @@ public class MetaAPI extends ZohoCreatorSdk {
     @SneakyThrows
     public ReportWrapper getReports(ReportListRequest reportListRequest) {
 
-        URIBuilder uriBuilder = new URIBuilder(ConstantCodes.API_BASE_END_POINT.concat(ConstantCodes.SLASH_CHARACTER)
+        URIBuilder uriBuilder = new URIBuilder(API_BASE_END_POINT.concat(SLASH_CHARACTER)
             .concat(reportListRequest.getAccountOwnerName())
-            .concat(ConstantCodes.SLASH_CHARACTER)
+            .concat(SLASH_CHARACTER)
             .concat(reportListRequest.getAppLinkName())
             .concat(ConstantCodes.REPORT_ENDPOINT));
 
