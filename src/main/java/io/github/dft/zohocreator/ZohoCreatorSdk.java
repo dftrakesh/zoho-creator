@@ -3,6 +3,8 @@ package io.github.dft.zohocreator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.dft.zohocreator.model.authenticationapi.AccessCredential;
 import io.github.dft.zohocreator.model.authenticationapi.AccessTokenResponse;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.SneakyThrows;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.utils.URIBuilder;
@@ -16,6 +18,8 @@ import java.util.concurrent.CompletableFuture;
 
 import static io.github.dft.zohocreator.constantcode.ConstantCodes.*;
 
+@AllArgsConstructor
+@Builder(toBuilder = true)
 public class ZohoCreatorSdk {
 
     protected HttpClient client;
@@ -31,7 +35,6 @@ public class ZohoCreatorSdk {
 
     @SneakyThrows
     protected <T> T getRequestWrapped(HttpRequest request, Class<T> tClass) {
-        refreshAccessToken();
 
         return client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
             .thenComposeAsync(response -> tryResend(client, request, HttpResponse.BodyHandlers.ofString(), response, 1))
@@ -80,7 +83,7 @@ public class ZohoCreatorSdk {
 
     @SneakyThrows
     protected String getString(Object body) {
-        return objectMapper.writeValueAsString(body);
+        return this.objectMapper.writeValueAsString(body);
     }
 
     @SneakyThrows
@@ -91,6 +94,10 @@ public class ZohoCreatorSdk {
         for (String key : params.keySet()) {
             uriBuilder.addParameter(key, params.get(key));
         }
+    }
+
+    public DataAPI getDataApi() {
+        return new DataAPI(accessCredential);
     }
 
     @SneakyThrows

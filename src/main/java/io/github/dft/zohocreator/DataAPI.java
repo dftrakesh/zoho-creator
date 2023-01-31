@@ -5,7 +5,6 @@ import io.github.dft.zohocreator.model.dataapi.AddRecordRequest;
 import io.github.dft.zohocreator.model.dataapi.AddRecordResponse;
 import io.github.dft.zohocreator.model.dataapi.Records;
 import io.github.dft.zohocreator.model.dataapi.UpdateRecordRequest;
-import lombok.Builder;
 import lombok.SneakyThrows;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.utils.URIBuilder;
@@ -15,10 +14,7 @@ import java.util.HashMap;
 
 import static io.github.dft.zohocreator.constantcode.ConstantCodes.*;
 
-@Builder(toBuilder = true)
 public class DataAPI extends ZohoCreatorSdk {
-
-    protected AccessCredential accessCredential;
 
     public DataAPI(AccessCredential accessCredential) {
         super(accessCredential);
@@ -43,6 +39,7 @@ public class DataAPI extends ZohoCreatorSdk {
             .headers(AUTHORIZATION_HEADER, TOKEN_NAME.concat(accessCredential.getAccessToken()))
             .build();
 
+        refreshAccessToken();
         return getRequestWrapped(request, Records.class);
     }
 
@@ -63,6 +60,7 @@ public class DataAPI extends ZohoCreatorSdk {
             .headers(AUTHORIZATION_HEADER, TOKEN_NAME.concat(accessCredential.getAccessToken()))
             .build();
 
+        refreshAccessToken();
         return getRequestWrapped(request, AddRecordResponse.class);
     }
 
@@ -86,6 +84,7 @@ public class DataAPI extends ZohoCreatorSdk {
             .headers(AUTHORIZATION_HEADER, TOKEN_NAME.concat(accessCredential.getAccessToken()))
             .build();
 
+        refreshAccessToken();
         return getRequestWrapped(request, AddRecordResponse.class);
     }
 }
