@@ -83,7 +83,7 @@ public class ZohoCreatorSdk {
 
     @SneakyThrows
     protected String getString(Object body) {
-        return this.objectMapper.writeValueAsString(body);
+        return objectMapper.writeValueAsString(body);
     }
 
     @SneakyThrows
