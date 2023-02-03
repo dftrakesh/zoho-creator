@@ -22,6 +22,7 @@ public class DataAPI extends ZohoCreatorSdk {
 
     @SneakyThrows
     public Records getRecords(HashMap<String, String> params, String reportLinkName) {
+        refreshAccessToken();
 
         URIBuilder uriBuilder = new URIBuilder(API_BASE_END_POINT.concat(SLASH_CHARACTER)
             .concat(accessCredential.getAccountOwnerName())
@@ -39,12 +40,12 @@ public class DataAPI extends ZohoCreatorSdk {
             .headers(AUTHORIZATION_HEADER, TOKEN_NAME.concat(accessCredential.getAccessToken()))
             .build();
 
-        refreshAccessToken();
         return getRequestWrapped(request, Records.class);
     }
 
     @SneakyThrows
     public AddRecordResponse addRecord(AddRecordRequest addRecordRequest) {
+        refreshAccessToken();
 
         URIBuilder uriBuilder = new URIBuilder(API_BASE_END_POINT.concat(SLASH_CHARACTER)
             .concat(accessCredential.getAccountOwnerName())
@@ -60,13 +61,13 @@ public class DataAPI extends ZohoCreatorSdk {
             .headers(AUTHORIZATION_HEADER, TOKEN_NAME.concat(accessCredential.getAccessToken()))
             .build();
 
-        refreshAccessToken();
         return getRequestWrapped(request, AddRecordResponse.class);
     }
 
 
     @SneakyThrows
     public AddRecordResponse updateRecord(UpdateRecordRequest updateRecordRequest) {
+        refreshAccessToken();
 
         URIBuilder uriBuilder = new URIBuilder(API_BASE_END_POINT.concat(SLASH_CHARACTER)
             .concat(accessCredential.getAccountOwnerName())
@@ -84,7 +85,6 @@ public class DataAPI extends ZohoCreatorSdk {
             .headers(AUTHORIZATION_HEADER, TOKEN_NAME.concat(accessCredential.getAccessToken()))
             .build();
 
-        refreshAccessToken();
         return getRequestWrapped(request, AddRecordResponse.class);
     }
 }
