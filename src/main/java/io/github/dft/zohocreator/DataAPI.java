@@ -103,6 +103,6 @@ public class DataAPI extends ZohoCreatorSdk {
             .headers(AUTHORIZATION_HEADER, TOKEN_NAME.concat(accessCredential.getAccessToken()))
             .build();
 
-        return getRequestWrapped(request, DeleteRecordResponseWrapper.class);
+        return  getRequestWrapped(request, DeleteRecordResponseWrapper.class);
     }
 }
