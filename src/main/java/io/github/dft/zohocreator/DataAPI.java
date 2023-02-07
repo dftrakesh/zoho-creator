@@ -1,10 +1,7 @@
 package io.github.dft.zohocreator;
 
 import io.github.dft.zohocreator.model.authenticationapi.AccessCredential;
-import io.github.dft.zohocreator.model.dataapi.AddRecordRequest;
-import io.github.dft.zohocreator.model.dataapi.AddRecordResponse;
-import io.github.dft.zohocreator.model.dataapi.Records;
-import io.github.dft.zohocreator.model.dataapi.UpdateRecordRequest;
+import io.github.dft.zohocreator.model.dataapi.*;
 import lombok.SneakyThrows;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.utils.URIBuilder;
@@ -86,5 +83,26 @@ public class DataAPI extends ZohoCreatorSdk {
             .build();
 
         return getRequestWrapped(request, AddRecordResponse.class);
+    }
+
+    @SneakyThrows
+    public DeleteRecordResponseWrapper deleteRecords(DeleteRecordRequest deleteRecordRequest) {
+        refreshAccessToken();
+
+        URIBuilder uriBuilder = new URIBuilder(API_BASE_END_POINT.concat(SLASH_CHARACTER)
+            .concat(accessCredential.getAccountOwnerName())
+            .concat(SLASH_CHARACTER)
+            .concat(accessCredential.getAppLinkName())
+            .concat(REPORT_ENDPOINT)
+            .concat(SLASH_CHARACTER)
+            .concat(deleteRecordRequest.getFormLinkName()));
+
+        HttpRequest request = HttpRequest.newBuilder(uriBuilder.build())
+            .method("DELETE", HttpRequest.BodyPublishers.ofString(getString(deleteRecordRequest)))
+            .header(HttpHeaders.CONTENT_TYPE, CONTENT_TYPE_VALUE)
+            .headers(AUTHORIZATION_HEADER, TOKEN_NAME.concat(accessCredential.getAccessToken()))
+            .build();
+
+        return getRequestWrapped(request, DeleteRecordResponseWrapper.class);
     }
 }
