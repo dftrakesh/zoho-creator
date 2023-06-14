@@ -11,5 +11,5 @@ import java.util.List;
 public class Records {
     private String code;
     private String description;
-    private List<HashMap<String, String>> data;
+    private List<HashMap<String, Object>> data;
 }
